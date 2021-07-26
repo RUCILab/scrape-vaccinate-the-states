@@ -3,19 +3,16 @@
 library(jsonlite)
 library(dplyr)
 library(readr)
-library(tidycensus)
 
-data("fips_codes")
+# get state abbreviations
+states <- state.abb
 
-# get state fips codes from tidycensus
-states <- fips_codes$state %>%
-  unique()
-
+# build url for queries
 baseurl <- "https://api.vaccinatethestates.com/v0/"
 
 national_data <- data.frame()
 
-for (i in 1:51) {
+for (i in 1:length(states)) {
 
   # build URL for API query
   state_url <- paste0(baseurl,states[i],".geojson")
