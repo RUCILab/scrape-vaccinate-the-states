@@ -21,9 +21,11 @@ for (i in 1:length(states)) {
   # grab data for a single state
   state_data <- fromJSON(state_url,flatten=TRUE)[["features"]]
 
+  for (j in 1:nrow(state_data)) {
   # clean up the coordinates
-  state_data$lon <- strsplit(as.character(unlist(state_data$geometry.coordinates)), " ")[[1]]
-  state_data$lat <- strsplit(as.character(unlist(state_data$geometry.coordinates)), " ")[[2]]
+  state_data$longitude[j] <- strsplit(as.character(unlist(state_data$geometry.coordinates[j])), " ")[[1]]
+  state_data$latitude[j] <- strsplit(as.character(unlist(state_data$geometry.coordinates[j])), " ")[[2]]
+  }
 
   # combine
   national_data <- rbind(national_data,state_data)
